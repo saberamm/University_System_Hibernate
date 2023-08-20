@@ -10,7 +10,7 @@ import java.util.List;
 public class Student extends User {
     @Column(name = "student_number")
     private String studentNumber;
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(mappedBy = "students")
     private List<Course> courses;
 
     public Student(String studentNumber, List<Course> courses) {

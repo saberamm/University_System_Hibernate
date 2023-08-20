@@ -1,6 +1,5 @@
 package entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -12,7 +11,7 @@ import java.util.List;
 public class Teacher extends User {
     @Column(name = "teacher_number")
     private String teacherNumber;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher")
     private List<Course> courses;
 
     public Teacher(String teacherNumber, List<Course> courses) {

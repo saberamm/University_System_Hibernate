@@ -13,9 +13,9 @@ public class Course extends BaseEntity<Long> {
     private String courseScore;
     @Enumerated(EnumType.STRING)
     private Semester semester;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Student> students;
 
     public Course(String courseName, String courseScore, Semester semester, Teacher teacher, List<Student> students) {
