@@ -4,18 +4,21 @@ import base.entity.BaseEntity;
 import entity.enumeration.Semester;
 import jakarta.persistence.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 @Entity
 public class Course extends BaseEntity<Long> {
 
     private String courseName;
-
+    @Min(value = 1, message = "Course score must be at least 1")
+    @Max(value = 20, message = "Course score must not exceed 20")
     private String courseScore;
     @Enumerated(EnumType.STRING)
     private Semester semester;
     @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "courses")
     private List<Student> students;
 
     public Course(String courseName, String courseScore, Semester semester, Teacher teacher, List<Student> students) {
@@ -88,7 +91,6 @@ public class Course extends BaseEntity<Long> {
                 ", courseScore='" + courseScore + '\'' +
                 ", semester=" + semester +
                 ", teacher=" + teacher +
-                ", students=" + students +
                 '}';
     }
 }

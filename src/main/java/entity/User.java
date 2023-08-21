@@ -2,21 +2,20 @@ package entity;
 
 import base.entity.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "user_table")
 public class User extends BaseEntity<Long> {
-    @Max(value = 50, message = "Name should not be greater than 50")
     @NotNull(message = "Name cannot be null")
     private String firstName;
-    @Max(value = 50, message = "Lastname should not be greater than 50")
     @NotNull(message = "Lastname cannot be null")
     private String lastName;
-    @Max(value = 50, message = "Username should not be greater than 50")
     @NotNull(message = "Username cannot be null")
     @Column(unique = true)
     private String username;

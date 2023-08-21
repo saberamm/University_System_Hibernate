@@ -4,13 +4,16 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 @Entity
 public class Student extends User {
     @Column(name = "student_number")
+    @Size(min = 5, max = 5, message = "student Number must have 5 digits")
     private String studentNumber;
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Course> courses;
 
     public Student(String studentNumber, List<Course> courses) {
@@ -52,12 +55,12 @@ public class Student extends User {
         return "Student{" +
                 "id=" + getId() +
                 ", studentNumber='" + studentNumber + '\'' +
-                ", courses=" + courses +
                 ", firstName='" + getFirstName() + '\'' +
                 ", lastName='" + getLastName() + '\'' +
                 ", username='" + getUsername() + '\'' +
                 ", password='" + getPassword() + '\'' +
                 ", birthDate=" + getBirthDate() +
+                ", courses=" + courses +
                 '}';
     }
 }

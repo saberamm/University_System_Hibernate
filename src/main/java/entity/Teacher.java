@@ -4,12 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class Teacher extends User {
     @Column(name = "teacher_number")
+    @Size(min = 5, max = 5, message = "teacher Number must have 5 digits")
     private String teacherNumber;
     @OneToMany(mappedBy = "teacher")
     private List<Course> courses;
@@ -53,7 +55,6 @@ public class Teacher extends User {
         return "Teacher{" +
                 "id=" + getId() +
                 ",  teacherNumber='" + teacherNumber + '\'' +
-                ", courses=" + courses +
                 ", firstName='" + getFirstName() + '\'' +
                 ", lastName='" + getLastName() + '\'' +
                 ", username='" + getUsername() + '\'' +

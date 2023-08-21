@@ -4,22 +4,39 @@ package entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+
 @Entity
 public class Employee extends User {
     @Column(name = "employee_number")
+    @Size(min = 5, max = 5, message = "employee Number must have 5 digits")
     private String employeeNumber;
 
-    public Employee(String employeeNumber) {
+    private Long employeeSalary;
+
+    public Employee(String employeeNumber, Long employeeSalary) {
         this.employeeNumber = employeeNumber;
+        this.employeeSalary = employeeSalary;
     }
 
-    public Employee(String firstName, String lastName, String username, String password, LocalDate birthDate, String employeeNumber) {
+    public Employee(String firstName, String lastName, String username, String password, LocalDate birthDate, String employeeNumber, Long employeeSalary) {
         super(firstName, lastName, username, password, birthDate);
         this.employeeNumber = employeeNumber;
+        this.employeeSalary = employeeSalary;
     }
 
     public Employee() {
+    }
+
+    public Long getEmployeeSalary() {
+        return employeeSalary;
+    }
+
+    public void setEmployeeSalary(Long employeeSalary) {
+        this.employeeSalary = employeeSalary;
     }
 
     public String getEmployeeNumber() {
@@ -35,6 +52,7 @@ public class Employee extends User {
         return "Employee{" +
                 "id=" + getId() +
                 ", employeeNumber='" + employeeNumber + '\'' +
+                ", employeeSalary='" + employeeSalary + '\'' +
                 ", firstName='" + getFirstName() + '\'' +
                 ", lastName='" + getLastName() + '\'' +
                 ", username='" + getUsername() + '\'' +

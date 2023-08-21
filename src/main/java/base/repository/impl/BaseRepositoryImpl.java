@@ -3,7 +3,8 @@ package base.repository.impl;
 import base.entity.BaseEntity;
 import base.repository.BaseRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceException;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,34 +21,52 @@ public abstract class BaseRepositoryImpl<E extends BaseEntity<ID>, ID extends Se
 
     @Override
     public E save(E e) {
-        entityManager.persist(e);
-        return e;
+        try {
+            entityManager.persist(e);
+            return e;
+        } catch (PersistenceException ex) {
+            throw new RuntimeException("Error while saving entity: " + ex.getMessage(), ex);
+        }
     }
 
     @Override
     public E update(E e) {
-        return entityManager.merge(e);
+        try {
+            return entityManager.merge(e);
+        } catch (PersistenceException ex) {
+            throw new RuntimeException("Error while updating entity: " + ex.getMessage(), ex);
+        }
     }
 
     @Override
     public void delete(E e) {
-
-        entityManager.remove(e);
+        try {
+            entityManager.remove(e);
+        } catch (IllegalArgumentException ex) {
+            throw new EntityNotFoundException("Entity not found");
+        }
     }
 
     @Override
     public E findById(ID id) {
-        return entityManager.find(getEntityClass(), id);
+        try {
+            return entityManager.find(getEntityClass(), id);
+        } catch (EntityNotFoundException ex) {
+            throw new EntityNotFoundException("Entity not found");
+        }
     }
 
     @Override
     public List<E> findAll() {
-        return entityManager.createQuery("from " + getEntityClass().getSimpleName(), getEntityClass()).getResultList();
+        try {
+            return entityManager.createQuery("from " + getEntityClass().getSimpleName(), getEntityClass()).getResultList();
+        } catch (PersistenceException ex) {
+            throw new RuntimeException("Error while fetching entities: " + ex.getMessage(), ex);
+        }
     }
 
     @Override
     public boolean isContainById(ID id) {
-
         E ic = entityManager.find(getEntityClass(), id);
         return ic != null;
     }
