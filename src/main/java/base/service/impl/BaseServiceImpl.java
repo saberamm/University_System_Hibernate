@@ -4,14 +4,20 @@ import base.entity.BaseEntity;
 import base.repository.BaseRepository;
 import base.service.BaseService;
 import jakarta.persistence.EntityNotFoundException;
+import validations.EntityValidator;
 
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public abstract class BaseServiceImpl<E extends BaseEntity<ID>, ID extends Serializable, R extends BaseRepository<E, ID>>
         implements BaseService<E, ID> {
 
     protected final R repository;
+    protected final Validator validator=EntityValidator.validator;
 
     public BaseServiceImpl(R repository) {
         this.repository = repository;
@@ -91,6 +97,16 @@ public abstract class BaseServiceImpl<E extends BaseEntity<ID>, ID extends Seria
         } catch (Exception ex) {
             throw new RuntimeException("Error while checking if entity exists: " + ex.getMessage(), ex);
         }
+    }
+    @Override
+    public boolean isValid(E e) {
+        Set<ConstraintViolation<E>> violations = validator.validate(e);
+        if(!violations.isEmpty()){
+            for(ConstraintViolation<E> p : violations)
+                System.out.println(p.getMessage());
+            return false;
+        }
+        return true;
     }
 }
 

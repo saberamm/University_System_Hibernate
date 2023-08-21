@@ -17,4 +17,6 @@ public interface BaseService<E extends BaseEntity<ID>, ID extends Serializable> 
     List<E> findAll();
 
     boolean isContainById(ID id);
+
+    boolean isValid(E e);
 }
