@@ -78,4 +78,17 @@ public class ApplicationContext {
         return employeeService;
     }
 
+    //------------ Course Student application context ------------------//
+
+    private static final CourseStudentService courseStudentService;
+
+    static {
+        CourseStudentRepository courseStudentRepository = new CourseStudentRepositoryImpl(entityManager);
+        courseStudentService = new CourseStudentServiceImpl(courseStudentRepository);
+    }
+
+    public static CourseStudentService getCourseStudentService() {
+        return courseStudentService;
+    }
+
 }

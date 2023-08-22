@@ -8,9 +8,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-//        User user = new User("sss", "sss", "sss",
-//                "sssssssss", LocalDate.of(2010, 5, 5));
-//        ApplicationContext.getUserService().save(user);
+        User user = new User("sss", "sss", "sss",
+                "sssssssss", LocalDate.of(2010, 5, 5));
+        ApplicationContext.getUserService().save(user);
 
 //        Employee employee = new Employee("sss", "sss", "sse",
 //                "seeeeess", LocalDate.of(1999, 9, 9), "12333",400000L);

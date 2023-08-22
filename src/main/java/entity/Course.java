@@ -13,9 +13,6 @@ import java.util.List;
 public class Course extends BaseEntity<Long> {
     @NotNull(message = "course Name cannot be null")
     private String courseName;
-    @Min(value = 1, message = "Course score must be at least 1")
-    @Max(value = 20, message = "Course score must not exceed 20")
-    private String courseScore;
     @Enumerated(EnumType.STRING)
     @NotNull(message = "semester cannot be null")
     private Semester semester;
@@ -25,21 +22,19 @@ public class Course extends BaseEntity<Long> {
     private int courseCredit;
     @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
-    @ManyToMany(mappedBy = "courses")
-    private List<Student> students;
+    @OneToMany(mappedBy = "course")
+    private List<CourseStudent> courseStudents;
 
-    public Course(String courseName, String courseScore, Semester semester, int courseCredit, Teacher teacher, List<Student> students) {
+    public Course(String courseName, Semester semester, int courseCredit, Teacher teacher, List<CourseStudent> courseStudents) {
         this.courseName = courseName;
-        this.courseScore = courseScore;
         this.semester = semester;
         this.courseCredit = courseCredit;
         this.teacher = teacher;
-        this.students = students;
+        this.courseStudents = courseStudents;
     }
 
     public Course(String courseName, String courseScore, Semester semester, int courseCredit) {
         this.courseName = courseName;
-        this.courseScore = courseScore;
         this.semester = semester;
         this.courseCredit = courseCredit;
     }
@@ -68,14 +63,6 @@ public class Course extends BaseEntity<Long> {
         this.courseName = courseName;
     }
 
-    public String getCourseScore() {
-        return courseScore;
-    }
-
-    public void setCourseScore(String courseScore) {
-        this.courseScore = courseScore;
-    }
-
     public Semester getSemester() {
         return semester;
     }
@@ -92,12 +79,12 @@ public class Course extends BaseEntity<Long> {
         this.teacher = teacher;
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public List<CourseStudent> getCourseStudents() {
+        return courseStudents;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void setCourseStudents(List<CourseStudent> courseStudents) {
+        this.courseStudents = courseStudents;
     }
 
     public int getCourseCredit() {
@@ -114,7 +101,6 @@ public class Course extends BaseEntity<Long> {
                 "id=" + getId() +
                 ", courseName='" + courseName + '\'' +
                 ", courseCredit='" + courseCredit + '\'' +
-                ", courseScore='" + courseScore + '\'' +
                 ", semester=" + semester +
                 ", teacher=" + teacher +
                 '}';
