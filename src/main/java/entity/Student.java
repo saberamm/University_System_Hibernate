@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class Student extends User {
     @Column(name = "student_number")
     @Size(min = 5, max = 5, message = "student Number must have 5 digits")
+    @NotNull(message = "student Number cannot be null")
     private String studentNumber;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Course> courses;

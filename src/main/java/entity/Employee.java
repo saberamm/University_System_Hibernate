@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -13,8 +14,9 @@ import java.time.LocalDate;
 public class Employee extends User {
     @Column(name = "employee_number")
     @Size(min = 5, max = 5, message = "employee Number must have 5 digits")
+    @NotNull(message = "employee Number cannot be null")
     private String employeeNumber;
-
+    @NotNull(message = "employee salary cannot be null")
     private Long employeeSalary;
 
     public Employee(String employeeNumber, Long employeeSalary) {

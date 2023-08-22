@@ -17,7 +17,7 @@ public abstract class BaseServiceImpl<E extends BaseEntity<ID>, ID extends Seria
         implements BaseService<E, ID> {
 
     protected final R repository;
-    protected final Validator validator=EntityValidator.validator;
+    protected final Validator validator = EntityValidator.validator;
 
     public BaseServiceImpl(R repository) {
         this.repository = repository;
@@ -25,33 +25,37 @@ public abstract class BaseServiceImpl<E extends BaseEntity<ID>, ID extends Seria
 
     @Override
     public E save(E e) {
+        if (!isValid(e))
+            return null;
+        repository.getEntityManager().getTransaction().begin();
         try {
-            repository.getEntityManager().getTransaction().begin();
             repository.save(e);
             repository.getEntityManager().getTransaction().commit();
-            return e;
         } catch (Exception ex) {
             if (repository.getEntityManager().getTransaction().isActive()) {
                 repository.getEntityManager().getTransaction().rollback();
             }
             throw new RuntimeException("Error while saving entity: " + ex.getMessage(), ex);
         }
+        return e;
     }
 
 
     @Override
     public E update(E e) {
+        if (!isValid(e))
+            return null;
+        repository.getEntityManager().getTransaction().begin();
         try {
-            repository.getEntityManager().getTransaction().begin();
             repository.update(e);
             repository.getEntityManager().getTransaction().commit();
-            return e;
         } catch (Exception ex) {
             if (repository.getEntityManager().getTransaction().isActive()) {
                 repository.getEntityManager().getTransaction().rollback();
             }
             throw new RuntimeException("Error while updating entity: " + ex.getMessage(), ex);
         }
+        return e;
     }
 
     @Override
@@ -98,11 +102,12 @@ public abstract class BaseServiceImpl<E extends BaseEntity<ID>, ID extends Seria
             throw new RuntimeException("Error while checking if entity exists: " + ex.getMessage(), ex);
         }
     }
+
     @Override
     public boolean isValid(E e) {
         Set<ConstraintViolation<E>> violations = validator.validate(e);
-        if(!violations.isEmpty()){
-            for(ConstraintViolation<E> p : violations)
+        if (!violations.isEmpty()) {
+            for (ConstraintViolation<E> p : violations)
                 System.out.println(p.getMessage());
             return false;
         }

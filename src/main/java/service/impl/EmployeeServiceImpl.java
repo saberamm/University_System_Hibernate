@@ -14,9 +14,10 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, Long, Employe
         super(repository);
     }
 
+    @Override
     public Employee signUp(String firstName, String lastName, String username, String password, LocalDate birthDate, String employeeNumber, Long employeeSalary) {
-        Employee employee = new Employee(firstName, lastName, username, password, birthDate, employeeNumber
-                , employeeSalary);
+
+        Employee employee = new Employee(firstName, lastName, username, password, birthDate, employeeNumber, employeeSalary);
         if (!isValid(employee))
             return null;
         repository.getEntityManager().getTransaction().begin();
