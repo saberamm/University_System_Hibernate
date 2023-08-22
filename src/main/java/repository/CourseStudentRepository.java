@@ -1,7 +1,20 @@
 package repository;
 
-import base.repository.BaseRepository;
 import entity.CourseStudent;
+import jakarta.persistence.EntityManager;
 
-public interface CourseStudentRepository extends BaseRepository<CourseStudent, Long> {
+import java.util.List;
+
+public interface CourseStudentRepository {
+    Class<CourseStudent> getEntityClass();
+
+    CourseStudent save(CourseStudent courseStudent);
+
+    CourseStudent update(CourseStudent courseStudent);
+
+    void delete(CourseStudent courseStudent);
+
+    List<CourseStudent> findAll();
+
+    EntityManager getEntityManager();
 }

@@ -1,7 +1,17 @@
 package service;
 
-import base.service.BaseService;
 import entity.CourseStudent;
 
-public interface CourseStudentService extends BaseService<CourseStudent, Long> {
+import java.util.List;
+
+public interface CourseStudentService {
+    CourseStudent save(CourseStudent courseStudent);
+
+    CourseStudent update(CourseStudent courseStudent);
+
+    void delete(CourseStudent courseStudent);
+
+    List<CourseStudent> findAll();
+
+    boolean isValid(CourseStudent courseStudent);
 }
