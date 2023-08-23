@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class SimpleUser {
 
-    protected String firstname;
-    protected String lastname;
-    protected String username;
-    protected LocalDate birthDate;
+    private String firstname;
+    private String lastname;
+    private String username;
+    private LocalDate birthDate;
 
     public SimpleUser() {
     }
