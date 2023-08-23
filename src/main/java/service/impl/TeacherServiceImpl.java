@@ -22,4 +22,15 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, Long, TeacherRe
         repository.getEntityManager().getTransaction().commit();
         return teacher;
     }
+    @Override
+    public void deleteByTeacherNumber(String teacherNumber) {
+        repository.getEntityManager().getTransaction().begin();
+        repository.deleteByTeacherNumber(teacherNumber);
+        repository.getEntityManager().getTransaction().commit();
+    }
+
+    @Override
+    public Teacher findByTeacherNumber(String teacherNumber) {
+        return repository.findByTeacherNumber(teacherNumber);
+    }
 }

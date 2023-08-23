@@ -10,4 +10,8 @@ public interface EmployeeService extends BaseService<Employee, Long> {
 
     public Employee signUp(String firstName, String lastName, String username, String password,
                            LocalDate birthDate, String employeeNumber, Long employeeSalary);
+
+    void deleteByEmployeeNumber(String employeeNumber);
+
+    Employee findByEmployeeNumber(String employeeNumber);
 }

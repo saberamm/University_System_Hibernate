@@ -7,4 +7,8 @@ import java.time.LocalDate;
 
 public interface TeacherService extends BaseService<Teacher, Long> {
     Teacher signUp(String firstName, String lastName, String username, String password, LocalDate birthDate, String teacherNumber, boolean academicStaff);
+
+    void deleteByTeacherNumber(String teacherNumber);
+
+    Teacher findByTeacherNumber(String teacherNumber);
 }

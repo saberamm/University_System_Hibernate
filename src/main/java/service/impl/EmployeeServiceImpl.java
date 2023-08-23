@@ -25,4 +25,15 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, Long, Employe
         repository.getEntityManager().getTransaction().commit();
         return employee;
     }
+    @Override
+    public void deleteByEmployeeNumber(String employeeNumber) {
+        repository.getEntityManager().getTransaction().begin();
+        repository.deleteByEmployeeNumber(employeeNumber);
+        repository.getEntityManager().getTransaction().commit();
+    }
+
+    @Override
+    public Employee findByEmployeeNumber(String employeeNumber) {
+        return repository.findByEmployeeNumber(employeeNumber);
+    }
 }

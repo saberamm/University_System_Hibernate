@@ -3,6 +3,8 @@ package entity.enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static ui.UserMenu.scanner;
+
 public enum Semester {
     term_1_1400,
     term_2_1400,
@@ -36,5 +38,27 @@ public enum Semester {
         } else {
             throw new IllegalArgumentException("Invalid term format");
         }
+    }
+    public static Semester selectSemester() {
+        Semester selectedSemester = null;
+
+        System.out.println("Available Semesters:");
+        int index = 1;
+        for (Semester semester : Semester.values()) {
+            System.out.println(index + ". " + semester.name().replace("_", " "));
+            index++;
+        }
+
+        while (selectedSemester == null) {
+            System.out.print("Enter the number of the desired semester: ");
+            int choice = scanner.nextInt();
+
+            if (choice >= 1 && choice <= Semester.values().length) {
+                selectedSemester = Semester.values()[choice - 1];
+            } else {
+                System.out.println("Invalid choice. Please choose a valid semester.");
+            }
+        }
+        return selectedSemester;
     }
 }

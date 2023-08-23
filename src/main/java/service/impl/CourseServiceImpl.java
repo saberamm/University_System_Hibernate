@@ -9,4 +9,15 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     public CourseServiceImpl(CourseRepository repository) {
         super(repository);
     }
+    @Override
+    public void deleteByCourseNumber(String courseNumber) {
+        repository.getEntityManager().getTransaction().begin();
+        repository.deleteByCourseNumber(courseNumber);
+        repository.getEntityManager().getTransaction().commit();
+    }
+
+    @Override
+    public Course findByCourseNumber(String courseNumber) {
+        return repository.findByCourseNumber(courseNumber);
+    }
 }

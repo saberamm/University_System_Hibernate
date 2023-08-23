@@ -6,14 +6,11 @@ import entity.Teacher;
 import entity.User;
 import util.ApplicationContext;
 import util.SecurityContext;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import validations.TypeValidator;
 import java.util.Scanner;
 
 public class UserMenu {
-    static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void run() {
         int choice;
@@ -22,7 +19,7 @@ public class UserMenu {
         System.out.println("1. Signing section");
         System.out.println("0. exit");
         System.out.print("Enter your choice: ");
-        choice = scanner.nextInt();
+        choice = TypeValidator.getIntInput();
         System.out.println();
 
         switch (choice) {
@@ -51,6 +48,7 @@ public class UserMenu {
             if (user.getClass().getSimpleName().equals("Student")) {
                 Student student = ApplicationContext.getStudentService().findById(user.getId());
                 SecurityContext.studentNumber = student.getStudentNumber();
+                StudentMenu.run();
             }
             if (user.getClass().getSimpleName().equals("Teacher")) {
                 Teacher teacher = ApplicationContext.getTeacherService().findById(user.getId());
@@ -67,24 +65,5 @@ public class UserMenu {
         }
 
 
-    }
-
-    public static LocalDate dateFormatter() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy,M,d");
-        LocalDate localDate = null;
-        boolean validInput = false;
-
-        while (!validInput) {
-            System.out.print("Enter a date in the format (yyyy,M,d): ");
-            String dateString = scanner.next();
-
-            try {
-                localDate = LocalDate.parse(dateString, formatter);
-                validInput = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use yyyy,M,d.");
-            }
-        }
-        return localDate;
     }
 }
