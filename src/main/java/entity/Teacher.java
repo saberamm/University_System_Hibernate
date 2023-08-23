@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Teacher extends User {
@@ -111,5 +112,18 @@ public class Teacher extends User {
                 ", password='" + getPassword() + '\'' +
                 ", birthDate=" + getBirthDate() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+        return academicStaff == teacher.academicStaff && Objects.equals(teacherNumber, teacher.teacherNumber) && Objects.equals(teacherSalary, teacher.teacherSalary) && Objects.equals(courses, teacher.courses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teacherNumber, teacherSalary, academicStaff, courses);
     }
 }

@@ -10,11 +10,15 @@ public interface CourseStudentRepository {
 
     CourseStudent save(CourseStudent courseStudent);
 
+    List<CourseStudent> saveAll(List<CourseStudent> courseStudents);
+
     CourseStudent update(CourseStudent courseStudent);
 
     void delete(CourseStudent courseStudent);
 
     List<CourseStudent> findAll();
+
+    CourseStudent getCourseStudentByCourseTeacherStudentNumbers(String courseNumber, String teacherNumber, String studentNumber);
 
     EntityManager getEntityManager();
 }

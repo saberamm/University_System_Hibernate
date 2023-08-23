@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Student extends User {
@@ -55,5 +56,18 @@ public class Student extends User {
                 ", password='" + getPassword() + '\'' +
                 ", birthDate=" + getBirthDate() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(studentNumber, student.studentNumber) && Objects.equals(courseStudents, student.courseStudents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentNumber, courseStudents);
     }
 }

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Employee extends User {
@@ -61,5 +62,18 @@ public class Employee extends User {
                 ", password='" + getPassword() + '\'' +
                 ", birthDate=" + getBirthDate() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(employeeNumber, employee.employeeNumber) && Objects.equals(employeeSalary, employee.employeeSalary);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(employeeNumber, employeeSalary);
     }
 }

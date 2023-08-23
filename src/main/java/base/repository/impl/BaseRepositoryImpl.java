@@ -5,6 +5,7 @@ import base.repository.BaseRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.TransactionRequiredException;
 
 import java.io.Serializable;
 import java.util.List;
@@ -44,6 +45,14 @@ public abstract class BaseRepositoryImpl<E extends BaseEntity<ID>, ID extends Se
             entityManager.remove(e);
         } catch (IllegalArgumentException ex) {
             throw new EntityNotFoundException("Entity not found");
+        } catch (TransactionRequiredException ex) {
+            throw new RuntimeException("Transaction is required for delete operation");
+        } catch (PersistenceException ex) {
+            if (ex.getCause() != null) {
+                throw new RuntimeException("Constraint violation occurred during delete operation: " + ex.getMessage(), ex);
+            } else {
+                throw new RuntimeException("Error while deleting entity: " + ex.getMessage(), ex);
+            }
         }
     }
 

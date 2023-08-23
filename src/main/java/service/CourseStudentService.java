@@ -14,4 +14,7 @@ public interface CourseStudentService {
     List<CourseStudent> findAll();
 
     boolean isValid(CourseStudent courseStudent);
+    public List<CourseStudent> saveAll(List<CourseStudent> courseStudents);
+
+    CourseStudent getCourseStudentByCourseTeacherStudentNumbers(String courseNumber, String teacherNumber, String studentNumber);
 }

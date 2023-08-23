@@ -9,6 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Course extends BaseEntity<Long> {
@@ -25,7 +26,7 @@ public class Course extends BaseEntity<Long> {
     @Min(value = 1, message = "course Credit must be at least 1")
     @Max(value = 3, message = "course Credit must not exceed 3")
     private int courseCredit;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Teacher teacher;
     @OneToMany(mappedBy = "course")
     private List<CourseStudent> courseStudents;
@@ -121,5 +122,21 @@ public class Course extends BaseEntity<Long> {
                 ", semester=" + semester +
                 ", teacher=" + teacher +
                 '}';
+    }
+    public boolean isSimilarTo(Course otherCourse) {
+        return this.courseNumber.equals(otherCourse.courseNumber);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return courseCredit == course.courseCredit && Objects.equals(courseName, course.courseName) && Objects.equals(courseNumber, course.courseNumber) && semester == course.semester && Objects.equals(teacher, course.teacher) && Objects.equals(courseStudents, course.courseStudents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseName, courseNumber, semester, courseCredit, teacher, courseStudents);
     }
 }

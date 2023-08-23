@@ -86,4 +86,12 @@ public class CourseStudentServiceImpl implements CourseStudentService {
         return true;
     }
 
+    @Override
+    public List<CourseStudent> saveAll(List<CourseStudent> courseStudents) {
+        return repository.saveAll(courseStudents);
+    }
+    @Override
+    public CourseStudent getCourseStudentByCourseTeacherStudentNumbers(String courseNumber, String teacherNumber, String studentNumber){
+        return repository.getCourseStudentByCourseTeacherStudentNumbers(courseNumber, teacherNumber, studentNumber);
+    }
 }
