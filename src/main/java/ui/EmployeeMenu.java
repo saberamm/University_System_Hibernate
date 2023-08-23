@@ -1,6 +1,7 @@
 package ui;
 
 import entity.Student;
+import jakarta.persistence.EntityNotFoundException;
 import util.ApplicationContext;
 import util.SecurityContext;
 
@@ -177,11 +178,35 @@ public class EmployeeMenu {
     }
 
     private static void updateStudent() {
+        System.out.println("Enter student number :");
+        Student student = ApplicationContext.getStudentService().findByStudentNumber(scanner.next());
+        try {
+            if (student != null) {
+                System.out.println("Enter the first name");
+                student.setFirstName(scanner.next());
+                System.out.println("Enter the last name");
+                student.setLastName(scanner.next());
+                System.out.println("Enter the user name");
+                student.setUsername(scanner.next());
+                System.out.println("Enter the birth date");
+                student.setBirthDate(UserMenu.dateFormatter());
+                System.out.println("Enter the student number");
+                student.setStudentNumber(scanner.next());
+                if (ApplicationContext.getStudentService().isValid(student)) {
+                    ApplicationContext.getStudentService().update(student);
+                    studentEdit();
+                } else updateStudent();
+            } else throw new EntityNotFoundException("student not found try again");
+        } catch (EntityNotFoundException e) {
+            System.out.println(e.getMessage());
+            updateStudent();
+        }
     }
 
     private static void deleteStudent() {
         System.out.println("Enter the student number");
         ApplicationContext.getStudentService().deleteByStudentNumber(scanner.next());
+        studentEdit();
     }
 
     private static void signupStudent() {
@@ -200,6 +225,7 @@ public class EmployeeMenu {
         student.setStudentNumber(scanner.next());
         if (ApplicationContext.getStudentService().isValid(student)) {
             ApplicationContext.getStudentService().save(student);
+            studentEdit();
         } else signupStudent();
     }
 

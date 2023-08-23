@@ -76,7 +76,7 @@ public class UserMenu {
 
         while (!validInput) {
             System.out.print("Enter a date in the format (yyyy,M,d): ");
-            String dateString = scanner.nextLine();
+            String dateString = scanner.next();
 
             try {
                 localDate = LocalDate.parse(dateString, formatter);

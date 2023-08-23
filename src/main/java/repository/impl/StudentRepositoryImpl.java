@@ -40,6 +40,6 @@ public class StudentRepositoryImpl extends BaseRepositoryImpl<Student, Long> imp
 
         criteriaQuery.select(root).where(builder.equal(root.get("studentNumber"), studentNumber));
 
-        return entityManager.createQuery(criteriaQuery).getSingleResult();
+        return entityManager.createQuery(criteriaQuery).getResultStream().findFirst().orElse(null);
     }
 }
