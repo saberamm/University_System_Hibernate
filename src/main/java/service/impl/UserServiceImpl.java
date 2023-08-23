@@ -20,4 +20,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
     public SimpleUser findUserByUsername(String username) {
         return dtoMapper.userDtoMapper(repository.findUserByUsername(username));
     }
+
+    @Override
+    public User userAuthentication(String user_name, String password) {
+        return repository.userAuthentication(user_name, password);
+    }
 }

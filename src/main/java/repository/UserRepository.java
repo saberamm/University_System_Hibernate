@@ -5,4 +5,6 @@ import entity.User;
 
 public interface UserRepository extends BaseRepository<User, Long> {
     User findUserByUsername(String username);
+
+    User userAuthentication(String username, String password);
 }
