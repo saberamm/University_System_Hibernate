@@ -5,7 +5,6 @@ import dto.impl.DtoMapperImpl;
 import entity.Course;
 import entity.CourseStudent;
 import entity.Teacher;
-import entity.dto.SimpleStudent;
 import entity.dto.SimpleTeacher;
 import entity.enumeration.Semester;
 import util.ApplicationContext;
@@ -17,7 +16,7 @@ import java.util.List;
 import static ui.UserMenu.scanner;
 
 public class TeacherMenu {
-    private static void run() {
+    public static void run() {
         int choice;
         System.out.println("================");
         System.out.println("Teacher Section:");

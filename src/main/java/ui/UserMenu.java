@@ -53,6 +53,7 @@ public class UserMenu {
             if (user.getClass().getSimpleName().equals("Teacher")) {
                 Teacher teacher = ApplicationContext.getTeacherService().findById(user.getId());
                 SecurityContext.teacherNumber = teacher.getTeacherNumber();
+                TeacherMenu.run();
             }
             if (user.getClass().getSimpleName().equals("Employee")) {
                 Employee employee = ApplicationContext.getEmployeeService().findById(user.getId());
